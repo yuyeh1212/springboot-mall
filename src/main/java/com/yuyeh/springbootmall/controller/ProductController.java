@@ -1,6 +1,7 @@
 package com.yuyeh.springbootmall.controller;
 
 import com.yuyeh.springbootmall.constant.ProductCategory;
+import com.yuyeh.springbootmall.dto.ProductQueryParams;
 import com.yuyeh.springbootmall.dto.ProductRequest;
 import com.yuyeh.springbootmall.model.Product;
 import com.yuyeh.springbootmall.service.ProductService;
@@ -23,7 +24,11 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ){
-        List<Product> productList = productService.getProducts(category,search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
